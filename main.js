@@ -3,12 +3,12 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 
-// === 加载环境变量 ===
-import dotenv from 'dotenv'
-dotenv.config() 
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const isDev = process.env.NODE_ENV === 'development'
+
+// === 加载环境变量（必须指明路径才能在打包后的 asar 中正常读取） ===
+import dotenv from 'dotenv'
+dotenv.config({ path: path.join(__dirname, '.env') })
 
 // === 核心数据隔离：设置安全写入路径 ===
 // 让 server.js 知道自己是在被打包后的安全环境里启动的

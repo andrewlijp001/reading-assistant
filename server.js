@@ -44,7 +44,13 @@ const saveHistory = async (bookName, feature, input, output) => {
     
     const content = `\n## 🕒 ${timestamp}\n\n> **原文 / 输入**：\n> ${formattedInput}\n\n**🤖 解析结果**：\n\n${output}\n\n---\n`
     
-    await fs.promises.appendFile(filePath, content, 'utf-8')
+    let existingContent = ''
+    if (fs.existsSync(filePath)) {
+      existingContent = await fs.promises.readFile(filePath, 'utf-8')
+    }
+    
+    // 采用“头插法”(Prepend)，使最新的查询结果永远展示在 Markdown 文件的最顶端
+    await fs.promises.writeFile(filePath, content + existingContent, 'utf-8')
   } catch (err) {
     console.error('保存历史记录失败:', err)
   }

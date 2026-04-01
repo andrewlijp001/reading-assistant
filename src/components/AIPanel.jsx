@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { lookupWord, analyzeGrammar, analyzeBook, analyzeText, detectLanguage } from '../utils/api'
 
 const ACTION_META = {
@@ -14,6 +14,7 @@ export default function AIPanel({ selectedText, bookContent, bookTitle, onClearS
   const [loadingType, setLoadingType] = useState('')
   const [customPrompt, setCustomPrompt] = useState('')
   const [editableText, setEditableText] = useState('')
+  const scrollRef = useRef(null)
 
   useEffect(() => {
     if (selectedText) setEditableText(selectedText)
@@ -43,6 +44,7 @@ export default function AIPanel({ selectedText, bookContent, bookTitle, onClearS
 
     setLoading(true)
     setLoadingType(type)
+    if (scrollRef.current) scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' })
     const lang = detectLanguage(payload || customPrompt)
 
     try {
@@ -186,7 +188,7 @@ export default function AIPanel({ selectedText, bookContent, bookTitle, onClearS
       )}
 
       {/* 結果リスト */}
-      <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5 scroll-smooth relative">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-5 space-y-5 scroll-smooth relative">
         {results.length === 0 && !loading && (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-600">
             <div className="text-5xl mb-4 opacity-30 drop-shadow-lg">🤖</div>

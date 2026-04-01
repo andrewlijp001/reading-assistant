@@ -1,4 +1,5 @@
-const BASE = '/api'
+// 检测如果是在 Electron 中以本地文件形式（file://）加载，则需要强制补全后端服务所在的绝对地址
+const BASE = window.location.protocol === 'file:' ? 'http://localhost:3001/api' : '/api'
 
 // レスポンスエラーを読み取るヘルパー
 async function handleResponse(res, fallbackMsg) {
