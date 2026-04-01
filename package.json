@@ -1,0 +1,30 @@
+{
+  "name": "dokusho-tool",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"node --env-file-if-exists=.env server.js\" \"vite\"",
+    "dev:backend": "node --env-file-if-exists=.env server.js",
+    "dev:frontend": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "latest",
+    "cors": "^2.8.5",
+    "epubjs": "^0.3.93",
+    "express": "^4.18.2",
+    "multer": "^2.1.1",
+    "pdfjs-dist": "^4.0.379",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.1.0"
+  }
+}
