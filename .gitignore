@@ -30,3 +30,6 @@ dist-ssr
 uploads/
 history/
 .claude/
+
+# Electron binaries
+release/

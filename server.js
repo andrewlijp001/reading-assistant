@@ -13,8 +13,10 @@ const PORT = 3001
 app.use(cors())
 app.use(express.json({ limit: '50mb' }))
 
-const uploadDir = path.join(__dirname, 'uploads')
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir)
+const storagePath = process.env.STORAGE_PATH || __dirname
+
+const uploadDir = path.join(storagePath, 'uploads')
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true })
 
 const storage = multer.diskStorage({
   destination: uploadDir,
@@ -25,8 +27,8 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } })
 
-const historyDir = path.join(__dirname, 'history')
-if (!fs.existsSync(historyDir)) fs.mkdirSync(historyDir)
+const historyDir = path.join(storagePath, 'history')
+if (!fs.existsSync(historyDir)) fs.mkdirSync(historyDir, { recursive: true })
 
 const saveHistory = async (bookName, feature, input, output) => {
   try {
